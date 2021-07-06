@@ -2,6 +2,8 @@
 
 pip install tensorflow-datasets
 
+pip install -q git+https://github.com/tensorflow/examples.git
+
 sudo apt-get install python3-tk
 
 pip install pydot
