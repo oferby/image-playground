@@ -1,7 +1,7 @@
 import numpy as np
 import pygame
 import os
-
+import tensorflow as tf
 x = 80
 y = 50
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x, y)
@@ -26,6 +26,10 @@ screen = pygame.display.set_mode(WORLD_SIZE)
 screen.fill(WHITE)
 
 pygame.display.set_caption("Image Creator")
+
+
+def reset(background):
+    pygame.surfarray.blit_array(pygame.display.get_surface(), background)
 
 
 def get_surface():
@@ -66,16 +70,16 @@ def paint_random_shape():
     if r == 0:
         s = np.random.randint(10, 50)
         draw_rec(x, y, s, get_random_color())
-        return "rec", x, y, s, s
+        return [0, x, y, s, s]
     elif r == 1:
-        radius = np.random.randint(10, 26)
+        radius = np.random.randint(5, 20)
         draw_circle(radius, x, y, get_random_color())
-        return "circle", x - radius, y - radius, radius*2, radius*2
+        return [1, x - radius, y - radius, radius * 2, radius * 2]
     else:
         width = np.random.randint(60, 80)
         height = np.random.randint(20, 30)
         draw_ellipse(x, y, width, height, get_random_color())
-        return "ellipse", x, y, width, height
+        return [2, x, y, width, height]
 
 
 clean_background = get_surface()
@@ -83,18 +87,27 @@ clean_background = get_surface()
 images = []
 image_train = []
 
-n = np.random.randint(1, 10)
-for i in range(n):
-    shape = paint_random_shape()
-    image_train.append(shape)
+for j in range(3):
+    image_train_instances = []
+    n = np.random.randint(1, 10)
+    for i in range(n):
+        shape = paint_random_shape()
+        image_train_instances.append(shape)
 
-images.append(get_surface())
+    images.append(get_surface())
+    image_train.append(image_train_instances)
+    reset(clean_background)
 
-for i in range(len(image_train)):
-    data = image_train[i]
-    draw_rec_outline(data)
+# for i in range(len(image_train)):
+#     data = image_train[i]
+#     draw_rec_outline(data)
 
-pygame.display.flip()
 
-while True:
-    pass
+# for i in range(len(images)):
+#     reset(images[i])
+#     pygame.display.flip()
+
+images_dataset = tf.data.Dataset.from_tensor_slices(images)
+train_dataset = tf.data.Dataset.from_tensor_slices(image_train)
+
+pass

@@ -34,3 +34,5 @@ https://voxel51.com/docs/fiftyone/
 VIA Image Tool
 https://www.robots.ox.ac.uk/~vgg/software/via/
 
+TF Object Detection
+https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2.md
