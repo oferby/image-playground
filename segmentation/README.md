@@ -36,3 +36,4 @@ https://www.robots.ox.ac.uk/~vgg/software/via/
 
 TF Object Detection
 https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2.md
+https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/using_your_own_dataset.md
